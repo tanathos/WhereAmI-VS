@@ -4,6 +4,10 @@
         <Identity Id="d7022c04-e524-4d47-a011-c93376824650" Version="1.0" Language="en-US" Publisher="Eros Fratini" />
         <DisplayName>WhereAmI</DisplayName>
         <Description xml:space="preserve">WhereAmI? An extension for who gets lost in the code.</Description>
+        <License>LICENSE.txt</License>
+        <ReleaseNotes>changelog.txt</ReleaseNotes>
+        <Icon>Resources\logo.png</Icon>
+        <PreviewImage>Resources\preview.png</PreviewImage>
         <Tags>editor, decoration</Tags>
     </Metadata>
     <Installation>
