@@ -1,0 +1,4 @@
+﻿WhereAmI - Changelog
+--------------------
+
+1.0 - Basic porting of the WhereAmI 2017 extension
