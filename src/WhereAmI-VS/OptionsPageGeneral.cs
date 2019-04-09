@@ -147,6 +147,8 @@ namespace WhereAmI
                     this.ViewFilename = selectedTheme.ViewFilename;
                     this.ViewFolders = selectedTheme.ViewFolders;
                     this.ViewProject = selectedTheme.ViewProject;
+
+                    this.settings.Theme = selectedTheme.Theme;
                 }
             } 
         }
