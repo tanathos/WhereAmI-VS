@@ -124,7 +124,7 @@ namespace WhereAmI
                 // Retrieve the Id of the current theme used in VS from user's settings, this is changed a lot in VS2015
                 string visualStudioThemeId = VSRegistry.RegistryRoot(Microsoft.VisualStudio.Shell.Interop.__VsLocalRegistryType.RegType_UserSettings).OpenSubKey("ApplicationPrivateSettings").OpenSubKey("Microsoft").OpenSubKey("VisualStudio").GetValue("ColorTheme", "de3dbbcd-f642-433c-8353-8f1df4370aba", Microsoft.Win32.RegistryValueOptions.DoNotExpandEnvironmentNames).ToString();
 
-                string parsedThemeId = Guid.Parse(visualStudioThemeId.Split('*')[2]).ToString();
+                string parsedThemeId = Guid.Parse(visualStudioThemeId.Split('*')[0]).ToString();
 
                 switch (parsedThemeId)
                 {

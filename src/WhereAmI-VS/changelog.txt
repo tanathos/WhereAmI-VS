@@ -1,4 +1,5 @@
 ﻿WhereAmI - Changelog
 --------------------
+1.1.0	- Support for VS 2022
 1.0.1	- Converted to AsyncPackage
 1.0		- Basic porting of the WhereAmI 2017 extension
