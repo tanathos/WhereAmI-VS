@@ -4,15 +4,13 @@
 // </copyright>
 //------------------------------------------------------------------------------
 
+using EnvDTE;
+using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Text;
+using Microsoft.VisualStudio.Text.Editor;
 using System;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Microsoft.VisualStudio.Text.Editor;
-using Microsoft.VisualStudio.Text;
-using Microsoft.VisualStudio.Shell.Interop;
-using Microsoft.VisualStudio.Shell;
-using EnvDTE80;
-using EnvDTE;
 
 namespace WhereAmI
 {
@@ -41,6 +39,9 @@ namespace WhereAmI
         /// <param name="view">The <see cref="IWpfTextView"/> upon which the adornment will be drawn</param>
         public WhereAmI(IWpfTextView view, IWhereAmISettings settings)
         {
+            //Grab a reference to the adornment layer that this adornment should be added to
+            _adornmentLayer = view.GetAdornmentLayer(Constants.AdornmentLayerName);
+
             _view = view;
             _settings = settings;
 
@@ -112,6 +113,14 @@ namespace WhereAmI
                         _projectName.Opacity = _settings.Opacity;
                     }
                 }
+
+                // Updates the _fileName layer in case file gets renamed
+                textDoc.FileActionOccurred += delegate {
+                    string newFileName = System.IO.Path.GetFileName(textDoc.FilePath);
+                    _fileName.Text = newFileName;
+                    _fileName.UpdateLayout();
+                    this.onSizeChange(); 
+                };
             }
 
             // Force to have an ActualWidth
@@ -119,9 +128,6 @@ namespace WhereAmI
             _fileName.Arrange(finalRect);
             _folderStructure.Arrange(finalRect);
             _projectName.Arrange(finalRect);
-
-            //Grab a reference to the adornment layer that this adornment should be added to
-            _adornmentLayer = view.GetAdornmentLayer(Constants.AdornmentLayerName);
 
             _view.ViewportHeightChanged += delegate { this.onSizeChange(); };
             _view.ViewportWidthChanged += delegate { this.onSizeChange(); };
