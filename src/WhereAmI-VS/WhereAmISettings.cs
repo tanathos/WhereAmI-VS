@@ -30,41 +30,29 @@ namespace WhereAmI
             LoadSettings();
         }
 
-        public Color FilenameColor { get { return _FilenameColor; } set { _FilenameColor = value; } }
-        private Color _FilenameColor;
+        public Color FilenameColor { get; set; }
 
-        public Color FoldersColor { get { return _FoldersColor; } set { _FoldersColor = value; } }
-        private Color _FoldersColor;
+        public Color FoldersColor { get; set; }
+        
+        public Color ProjectColor { get; set; }
 
-        public Color ProjectColor { get { return _ProjectColor; } set { _ProjectColor = value; } }
-        private Color _ProjectColor;
+        public bool ViewFilename { get; set; }
 
-        public bool ViewFilename { get { return _ViewFilename; } set { _ViewFilename = value; } }
-        private bool _ViewFilename = true;
+        public bool ViewFolders { get; set; }
 
-        public bool ViewFolders { get { return _ViewFolders; } set { _ViewFolders = value; } }
-        private bool _ViewFolders = true;
+        public bool ViewProject { get; set; }
 
-        public bool ViewProject { get { return _ViewProject; } set { _ViewProject = value; } }
-        private bool _ViewProject = true;
+        public double FilenameSize { get; set; }
 
-        public double FilenameSize { get { return _FilenameSize; } set { _FilenameSize = value; } }
-        private double _FilenameSize;
+        public double FoldersSize { get; set; }
 
-        public double FoldersSize { get { return _FoldersSize; } set { _FoldersSize = value; } }
-        private double _FoldersSize;
+        public double ProjectSize { get; set; }
 
-        public double ProjectSize { get { return _ProjectSize; } set { _ProjectSize = value; } }
-        private double _ProjectSize;
+        public AdornmentPositions Position { get; set; }
 
-        public AdornmentPositions Position { get { return _Position; } set { _Position = value; } }
-        private AdornmentPositions _Position;
+        public double Opacity { get; set; }
 
-        public double Opacity { get { return _Opacity; } set { _Opacity = value; } }
-        private double _Opacity;
-
-        public Theme Theme { get { return _Theme; } set { _Theme = value; } }
-        private Theme _Theme;
+        public Theme Theme { get; set; }
 
         public void Store()
         {
@@ -107,17 +95,17 @@ namespace WhereAmI
         {
             // Default values
             var lightTheme = WhereAmISettings.LightThemeDefaults();
-            _FilenameSize = lightTheme.FilenameSize;
-            _FoldersSize = _ProjectSize = lightTheme.FoldersSize;
+            FilenameSize = lightTheme.FilenameSize;
+            FoldersSize = ProjectSize = lightTheme.FoldersSize;
 
-            _FilenameColor = lightTheme.FilenameColor;
-            _FoldersColor = _ProjectColor = lightTheme.FoldersColor;
+            FilenameColor = lightTheme.FilenameColor;
+            FoldersColor = ProjectColor = lightTheme.FoldersColor;
 
-            _Position = lightTheme.Position;
+            Position = lightTheme.Position;
 
-            _Opacity = lightTheme.Opacity;
-            _ViewFilename = _ViewFolders = _ViewProject = lightTheme.ViewFilename;
-            _Theme = lightTheme.Theme;
+            Opacity = lightTheme.Opacity;
+            ViewFilename = ViewFolders = ViewProject = lightTheme.ViewFilename;
+            Theme = lightTheme.Theme;
 
             try
             {
@@ -144,17 +132,17 @@ namespace WhereAmI
 
                     case Constants.VisualStudioDarkThemeId: // Dark
                         var darkTheme = WhereAmISettings.DarkThemeDefaults();
-                        _FilenameSize = darkTheme.FilenameSize;
-                        _FoldersSize = _ProjectSize = darkTheme.FoldersSize;
+                        FilenameSize = darkTheme.FilenameSize;
+                        FoldersSize = ProjectSize = darkTheme.FoldersSize;
 
-                        _FilenameColor = darkTheme.FilenameColor;
-                        _FoldersColor = _ProjectColor = darkTheme.FoldersColor;
+                        FilenameColor = darkTheme.FilenameColor;
+                        FoldersColor = ProjectColor = darkTheme.FoldersColor;
 
-                        _Position = darkTheme.Position;
+                        Position = darkTheme.Position;
 
-                        _Opacity = darkTheme.Opacity;
-                        _ViewFilename = _ViewFolders = _ViewProject = darkTheme.ViewFilename;
-                        _Theme = darkTheme.Theme;
+                        Opacity = darkTheme.Opacity;
+                        ViewFilename = ViewFolders = ViewProject = darkTheme.ViewFilename;
+                        Theme = darkTheme.Theme;
                         break;
                 }
 

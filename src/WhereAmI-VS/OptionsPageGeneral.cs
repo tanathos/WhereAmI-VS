@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.ComponentModelHost;
-using Microsoft.VisualStudio.Settings;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using System;
@@ -23,15 +22,6 @@ namespace WhereAmI
         {
             get
             {
-                //if (Site != null) 
-                //{
-                //    var componentModel = (IComponentModel)(Site.GetService(typeof(SComponentModel)));
-                //    IWhereAmISettings s = componentModel.DefaultExportProvider.GetExportedValue<IWhereAmISettings>();
-
-                //    return s;
-                //}
-
-                //return null;
                 var componentModel = (IComponentModel)(Site.GetService(typeof(SComponentModel)));
                 IWhereAmISettings s = componentModel.DefaultExportProvider.GetExportedValue<IWhereAmISettings>();
 
