@@ -23,15 +23,19 @@ namespace WhereAmI
         {
             get
             {
-                if (Site != null) 
-                {
-                    var componentModel = (IComponentModel)(Site.GetService(typeof(SComponentModel)));
-                    IWhereAmISettings s = componentModel.DefaultExportProvider.GetExportedValue<IWhereAmISettings>();
+                //if (Site != null) 
+                //{
+                //    var componentModel = (IComponentModel)(Site.GetService(typeof(SComponentModel)));
+                //    IWhereAmISettings s = componentModel.DefaultExportProvider.GetExportedValue<IWhereAmISettings>();
 
-                    return s;
-                }
-                
-                return null;
+                //    return s;
+                //}
+
+                //return null;
+                var componentModel = (IComponentModel)(Site.GetService(typeof(SComponentModel)));
+                IWhereAmISettings s = componentModel.DefaultExportProvider.GetExportedValue<IWhereAmISettings>();
+
+                return s;
             }
         }
 
