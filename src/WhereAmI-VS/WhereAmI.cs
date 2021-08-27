@@ -85,6 +85,14 @@ namespace WhereAmI
                         _fileName.TextAlignment = System.Windows.TextAlignment.Right;
                         _fileName.Foreground = fileNameBrush;
                         _fileName.Opacity = _settings.Opacity;
+
+                        // Updates the _fileName layer in case file gets renamed
+                        textDoc.FileActionOccurred += delegate {
+                            string newFileName = System.IO.Path.GetFileName(textDoc.FilePath);
+                            _fileName.Text = newFileName;
+                            _fileName.UpdateLayout();
+                            this.onSizeChange();
+                        };
                     }
 
                     if (_settings.ViewFolders)
@@ -111,16 +119,17 @@ namespace WhereAmI
                         _projectName.TextAlignment = System.Windows.TextAlignment.Right;
                         _projectName.Foreground = projectNameBrush;
                         _projectName.Opacity = _settings.Opacity;
+
+                        Community.VisualStudio.Toolkit.VS.Events.SolutionEvents.OnAfterRenameProject += delegate (Community.VisualStudio.Toolkit.Project p)
+                        {
+                            Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+                            var _proj = GetContainingProject(textDoc.FilePath);
+                            _projectName.Text = _proj.Name;
+                            _projectName.UpdateLayout();
+                            this.onSizeChange();
+                        };
                     }
                 }
-
-                // Updates the _fileName layer in case file gets renamed
-                textDoc.FileActionOccurred += delegate {
-                    string newFileName = System.IO.Path.GetFileName(textDoc.FilePath);
-                    _fileName.Text = newFileName;
-                    _fileName.UpdateLayout();
-                    this.onSizeChange(); 
-                };
             }
 
             // Force to have an ActualWidth
@@ -131,6 +140,7 @@ namespace WhereAmI
 
             _view.ViewportHeightChanged += delegate { this.onSizeChange(); };
             _view.ViewportWidthChanged += delegate { this.onSizeChange(); };
+            _view.GotAggregateFocus += delegate { this.onSizeChange(); };
         }
 
         public void onSizeChange()
