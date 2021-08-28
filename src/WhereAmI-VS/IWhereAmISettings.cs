@@ -80,6 +80,6 @@ namespace WhereAmI
         void Defaults();
 
         // TODO: implement settings change: https://docs.microsoft.com/en-us/visualstudio/extensibility/walkthrough-creating-a-view-adornment-commands-and-settings-column-guides?view=vs-2019
-
+        event EventHandler SettingsChanged;
     }
 }

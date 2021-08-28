@@ -16,6 +16,8 @@ namespace WhereAmI
         /// </summary>
         readonly WritableSettingsStore writableSettingsStore;
 
+        public event EventHandler SettingsChanged;
+
         public WhereAmISettings()
         {
 
@@ -78,6 +80,8 @@ namespace WhereAmI
                 writableSettingsStore.SetString(Constants.SettingsCollectionPath, "Position", this.Position.ToString());
                 writableSettingsStore.SetString(Constants.SettingsCollectionPath, "Opacity", this.Opacity.ToString());
                 writableSettingsStore.SetString(Constants.SettingsCollectionPath, "Theme", this.Theme.ToString());
+
+                SettingsChanged?.Invoke(this, EventArgs.Empty);
             }
             catch (Exception ex)
             {

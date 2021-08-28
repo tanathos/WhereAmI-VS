@@ -141,6 +141,13 @@ namespace WhereAmI
             _view.ViewportHeightChanged += delegate { this.onSizeChange(); };
             _view.ViewportWidthChanged += delegate { this.onSizeChange(); };
             _view.GotAggregateFocus += delegate { this.onSizeChange(); };
+
+            settings.SettingsChanged += Settings_SettingsChanged;
+        }
+
+        private void Settings_SettingsChanged(object sender, EventArgs e)
+        {
+            this.onSizeChange();
         }
 
         public void onSizeChange()
