@@ -161,11 +161,13 @@ namespace WhereAmI
             switch (_settings.Position)
             {
                 case AdornmentPositions.TopRight:
+                case AdornmentPositions.TopLeft:
                 default:
                     lineTopPosition = _view.ViewportTop + 5;
                     break;
 
                 case AdornmentPositions.BottomRight:
+                case AdornmentPositions.BottomLeft:
                     lineTopPosition = _view.ViewportBottom - 5;
                     fromTop = -1;
                     break;
@@ -177,7 +179,20 @@ namespace WhereAmI
                 if (fromTop == -1 && lineTopPosition == (_view.ViewportBottom - 5))
                     lineTopPosition += _fileName.ActualHeight * fromTop;
 
-                Canvas.SetLeft(_fileName, _view.ViewportRight - (_fileName.ActualWidth + 15));
+                switch (_settings.Position)
+                {
+                    case AdornmentPositions.TopLeft:
+                    case AdornmentPositions.BottomLeft:
+                        Canvas.SetLeft(_fileName, 0);
+                        break;
+
+                    case AdornmentPositions.TopRight:
+                    case AdornmentPositions.BottomRight:
+                    default:
+                        Canvas.SetLeft(_fileName, _view.ViewportRight - (_fileName.ActualWidth + 15));
+                        break;
+                }
+                
                 Canvas.SetTop(_fileName, lineTopPosition);
 
                 _adornmentLayer.AddAdornment(AdornmentPositioningBehavior.ViewportRelative, null, null, _fileName, null);
@@ -190,7 +205,20 @@ namespace WhereAmI
                 if (fromTop == -1 && lineTopPosition == (_view.ViewportBottom - 5))
                     lineTopPosition += _folderStructure.ActualHeight * fromTop;
 
-                Canvas.SetLeft(_folderStructure, _view.ViewportRight - (_folderStructure.ActualWidth + 15));
+                switch (_settings.Position)
+                {
+                    case AdornmentPositions.TopLeft:
+                    case AdornmentPositions.BottomLeft:
+                        Canvas.SetLeft(_folderStructure, 0);
+                        break;
+
+                    case AdornmentPositions.TopRight:
+                    case AdornmentPositions.BottomRight:
+                    default:
+                        Canvas.SetLeft(_folderStructure, _view.ViewportRight - (_folderStructure.ActualWidth + 15));
+                        break;
+                }
+                
                 Canvas.SetTop(_folderStructure, lineTopPosition);
 
                 _adornmentLayer.AddAdornment(AdornmentPositioningBehavior.ViewportRelative, null, null, _folderStructure, null);
@@ -203,7 +231,20 @@ namespace WhereAmI
                 if (fromTop == -1 && lineTopPosition == (_view.ViewportBottom - 5))
                     lineTopPosition += _projectName.ActualHeight * fromTop;
 
-                Canvas.SetLeft(_projectName, _view.ViewportRight - (_projectName.ActualWidth + 15));
+                switch (_settings.Position)
+                {
+                    case AdornmentPositions.TopLeft:
+                    case AdornmentPositions.BottomLeft:
+                        Canvas.SetLeft(_projectName, 0);
+                        break;
+
+                    case AdornmentPositions.TopRight:
+                    case AdornmentPositions.BottomRight:
+                    default:
+                        Canvas.SetLeft(_projectName, _view.ViewportRight - (_projectName.ActualWidth + 15));
+                        break;
+                }
+                
                 Canvas.SetTop(_projectName, lineTopPosition);
 
                 _adornmentLayer.AddAdornment(AdornmentPositioningBehavior.ViewportRelative, null, null, _projectName, null);

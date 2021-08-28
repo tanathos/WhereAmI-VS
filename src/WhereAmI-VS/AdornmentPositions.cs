@@ -17,6 +17,18 @@ namespace WhereAmI
         /// <summary>
         /// Bottom-right corner of the view
         /// </summary>
-        BottomRight
+        BottomRight,
+
+        [Description("Top-left corner")]
+        /// <summary>
+        /// Top-left corner of the view
+        /// </summary>
+        TopLeft,
+
+        [Description("Bottom-left corner")]
+        /// <summary>
+        /// Bottom-left corner of the view
+        /// </summary>
+        BottomLeft,
     }
 }
