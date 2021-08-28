@@ -85,6 +85,14 @@ namespace WhereAmI
                         _fileName.TextAlignment = System.Windows.TextAlignment.Right;
                         _fileName.Foreground = fileNameBrush;
                         _fileName.Opacity = _settings.Opacity;
+
+                        // Updates the _fileName layer in case file gets renamed
+                        textDoc.FileActionOccurred += delegate {
+                            string newFileName = System.IO.Path.GetFileName(textDoc.FilePath);
+                            _fileName.Text = newFileName;
+                            _fileName.UpdateLayout();
+                            this.onSizeChange();
+                        };
                     }
 
                     if (_settings.ViewFolders)
@@ -111,16 +119,17 @@ namespace WhereAmI
                         _projectName.TextAlignment = System.Windows.TextAlignment.Right;
                         _projectName.Foreground = projectNameBrush;
                         _projectName.Opacity = _settings.Opacity;
+
+                        Community.VisualStudio.Toolkit.VS.Events.SolutionEvents.OnAfterRenameProject += delegate (Community.VisualStudio.Toolkit.Project p)
+                        {
+                            Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+                            var _proj = GetContainingProject(textDoc.FilePath);
+                            _projectName.Text = _proj.Name;
+                            _projectName.UpdateLayout();
+                            this.onSizeChange();
+                        };
                     }
                 }
-
-                // Updates the _fileName layer in case file gets renamed
-                textDoc.FileActionOccurred += delegate {
-                    string newFileName = System.IO.Path.GetFileName(textDoc.FilePath);
-                    _fileName.Text = newFileName;
-                    _fileName.UpdateLayout();
-                    this.onSizeChange(); 
-                };
             }
 
             // Force to have an ActualWidth
@@ -131,6 +140,14 @@ namespace WhereAmI
 
             _view.ViewportHeightChanged += delegate { this.onSizeChange(); };
             _view.ViewportWidthChanged += delegate { this.onSizeChange(); };
+            _view.GotAggregateFocus += delegate { this.onSizeChange(); };
+
+            settings.SettingsChanged += Settings_SettingsChanged;
+        }
+
+        private void Settings_SettingsChanged(object sender, EventArgs e)
+        {
+            this.onSizeChange();
         }
 
         public void onSizeChange()
@@ -144,11 +161,13 @@ namespace WhereAmI
             switch (_settings.Position)
             {
                 case AdornmentPositions.TopRight:
+                case AdornmentPositions.TopLeft:
                 default:
                     lineTopPosition = _view.ViewportTop + 5;
                     break;
 
                 case AdornmentPositions.BottomRight:
+                case AdornmentPositions.BottomLeft:
                     lineTopPosition = _view.ViewportBottom - 5;
                     fromTop = -1;
                     break;
@@ -160,7 +179,20 @@ namespace WhereAmI
                 if (fromTop == -1 && lineTopPosition == (_view.ViewportBottom - 5))
                     lineTopPosition += _fileName.ActualHeight * fromTop;
 
-                Canvas.SetLeft(_fileName, _view.ViewportRight - (_fileName.ActualWidth + 15));
+                switch (_settings.Position)
+                {
+                    case AdornmentPositions.TopLeft:
+                    case AdornmentPositions.BottomLeft:
+                        Canvas.SetLeft(_fileName, 0);
+                        break;
+
+                    case AdornmentPositions.TopRight:
+                    case AdornmentPositions.BottomRight:
+                    default:
+                        Canvas.SetLeft(_fileName, _view.ViewportRight - (_fileName.ActualWidth + 15));
+                        break;
+                }
+                
                 Canvas.SetTop(_fileName, lineTopPosition);
 
                 _adornmentLayer.AddAdornment(AdornmentPositioningBehavior.ViewportRelative, null, null, _fileName, null);
@@ -173,7 +205,20 @@ namespace WhereAmI
                 if (fromTop == -1 && lineTopPosition == (_view.ViewportBottom - 5))
                     lineTopPosition += _folderStructure.ActualHeight * fromTop;
 
-                Canvas.SetLeft(_folderStructure, _view.ViewportRight - (_folderStructure.ActualWidth + 15));
+                switch (_settings.Position)
+                {
+                    case AdornmentPositions.TopLeft:
+                    case AdornmentPositions.BottomLeft:
+                        Canvas.SetLeft(_folderStructure, 0);
+                        break;
+
+                    case AdornmentPositions.TopRight:
+                    case AdornmentPositions.BottomRight:
+                    default:
+                        Canvas.SetLeft(_folderStructure, _view.ViewportRight - (_folderStructure.ActualWidth + 15));
+                        break;
+                }
+                
                 Canvas.SetTop(_folderStructure, lineTopPosition);
 
                 _adornmentLayer.AddAdornment(AdornmentPositioningBehavior.ViewportRelative, null, null, _folderStructure, null);
@@ -186,7 +231,20 @@ namespace WhereAmI
                 if (fromTop == -1 && lineTopPosition == (_view.ViewportBottom - 5))
                     lineTopPosition += _projectName.ActualHeight * fromTop;
 
-                Canvas.SetLeft(_projectName, _view.ViewportRight - (_projectName.ActualWidth + 15));
+                switch (_settings.Position)
+                {
+                    case AdornmentPositions.TopLeft:
+                    case AdornmentPositions.BottomLeft:
+                        Canvas.SetLeft(_projectName, 0);
+                        break;
+
+                    case AdornmentPositions.TopRight:
+                    case AdornmentPositions.BottomRight:
+                    default:
+                        Canvas.SetLeft(_projectName, _view.ViewportRight - (_projectName.ActualWidth + 15));
+                        break;
+                }
+                
                 Canvas.SetTop(_projectName, lineTopPosition);
 
                 _adornmentLayer.AddAdornment(AdornmentPositioningBehavior.ViewportRelative, null, null, _projectName, null);
