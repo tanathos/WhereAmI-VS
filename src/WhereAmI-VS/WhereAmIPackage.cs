@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 namespace WhereAmI
 {
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-    [InstalledProductRegistration("#110", "#112", "1.2.0", IconResourceID = 400)]
+    [InstalledProductRegistration("#110", "#112", "1.3.0", IconResourceID = 400)]
     [ProvideOptionPageAttribute(typeof(OptionsPageGeneral), "Where Am I", "General", 0, 0, supportsAutomation: true)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
     [Guid(Constants.GuidPackage)]
