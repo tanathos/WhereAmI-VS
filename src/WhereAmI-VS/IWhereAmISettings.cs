@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WhereAmI
 {
@@ -78,5 +74,7 @@ namespace WhereAmI
         void Store();
 
         void Defaults();
+
+        event EventHandler SettingsChanged;
     }
 }
